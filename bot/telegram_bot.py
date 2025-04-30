@@ -3,7 +3,7 @@ import logging
 import re
 import asyncio
 from dotenv import load_dotenv
-from telegram import Update
+from telegram import Update, InlineKeyboardButton, InlineKeyboardMarkup, BotCommand
 from telegram.ext import Application, CommandHandler, MessageHandler, filters, ContextTypes
 from agent.openai_agent import OpenAIAgent
 
@@ -25,6 +25,9 @@ class TelegramBot:
         # Initialize OpenAI agent
         self.agent = OpenAIAgent()
         
+        # Set up bot commands
+        self._setup_commands()
+        
         # Register handlers
         self._register_handlers()
         
@@ -44,32 +47,38 @@ class TelegramBot:
         """Send a message when the command /start is issued"""
         user = update.effective_user
         welcome_message = f"""
-Hi {user.first_name}!
+Hello {user.first_name}!
 
-I'm Omni Agent, your blockchain and cryptocurrency assistant.
+I'm Omni Agent – your all-in-one crypto assistant, right inside Telegram.
 
-Can I help you with anything?
+What can I do for you?
+• Analyze wallets & track crypto data
+• Query blockchain & research the web
+• Create tokens & NFTs instantly
+• Send tokens on the Sui network
+• Powered by smart AI – fast, simple, secure
 """
-        await update.message.reply_text(welcome_message)
+        keyboard = [
+            [InlineKeyboardButton("📰 News", callback_data="news")]
+        ]
+        reply_markup = InlineKeyboardMarkup(keyboard)
+        await update.message.reply_text(welcome_message, reply_markup=reply_markup)
     
     async def help_command(self, update: Update, context: ContextTypes.DEFAULT_TYPE):
         """Send a message when the command /help is issued"""
-        help_text = """
-Available commands:
-/start - Start the bot
-/help - Show this help message
-
-I am Omni Agent, your blockchain and cryptocurrency assistant. You can ask me about:
-
-• Blockchain technology and concepts
-• Cryptocurrencies and tokens
-• DeFi (Decentralized Finance)
-• NFTs and Web3
-• Crypto markets and news
-• Latest blockchain developments
-
-Just send me a message with your blockchain-related question!
-"""
+        help_text = (
+            "What can this bot do?\n"
+            "- Analyze wallets & track crypto data\n"
+            "- Query blockchain & research web\n"
+            "- Create tokens & NFTs instantly\n"
+            "- Send tokens on Sui network\n"
+            "- Powered by smart AI – fast, simple, secure\n\n"
+            "Your all-in-one crypto assistant — right inside Telegram!\n\n"
+            "Available commands:\n"
+            "/start - Start the bot and see the main menu\n"
+            "/help - Show this help message\n\n"
+            "Just send me a message with your crypto or blockchain question!"
+        )
         await update.message.reply_text(help_text)
     
     async def handle_message(self, update: Update, context: ContextTypes.DEFAULT_TYPE):
@@ -125,12 +134,24 @@ Just send me a message with your blockchain-related question!
         """Handle errors"""
         logger.error(f"Exception while handling an update: {context.error}")
     
+    async def _setup_commands(self):
+        """Set up the bot commands that will be shown in the Telegram client."""
+        commands = [
+            BotCommand("start", "Start the bot and see what I can do"),
+            BotCommand("help", "Show help information and available commands")
+        ]
+        await self.app.bot.set_my_commands(commands)
+    
     def run(self):
         """Run the bot until the user presses Ctrl-C"""
         logger.info("Starting bot...")
+        # Set up commands before starting polling
+        asyncio.get_event_loop().run_until_complete(self._setup_commands())
         self.app.run_polling(allowed_updates=Update.ALL_TYPES)
     
     def run_async(self):
         """Run the bot asynchronously"""
         logger.info("Starting bot asynchronously...")
+        # Set up commands before initializing
+        asyncio.get_event_loop().run_until_complete(self._setup_commands())
         return self.app.initialize() 

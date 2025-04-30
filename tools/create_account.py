@@ -9,7 +9,7 @@ logger = logging.getLogger(__name__)
 class CreateAccountTool:
     def __init__(self):
         load_dotenv()
-        self.api_url = f"{os.getenv("API_RELAYER_URL")}/api/sui/account"
+        self.api_url = f"{os.getenv('API_RELAYER_URL')}/api/sui/account"
     
     def get_function_schema(self):
         """
