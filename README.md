@@ -4,16 +4,15 @@ A Telegram bot that provides information and assistance related to blockchain te
 
 ## Features
 
-- Responds to user messages with AI-powered responses
-- Specialized in blockchain technology and cryptocurrency
-- Uses OpenAI's GPT-4 model
-- Provides information and tools for:
-  - Blockchain fundamentals and technologies
-  - Cryptocurrencies and tokens
-  - DeFi (Decentralized Finance)
-  - NFTs and Web3
-  - Crypto markets and trends
-  - Latest blockchain news and developments
+- 🤖 AI-Powered Responses: Intelligent responses using OpenAI's GPT-4 model
+- 🔗 Blockchain Expertise: Specialized in blockchain technology and cryptocurrency
+- 🛠️ Comprehensive Tools: Access to various blockchain and crypto tools
+- 📊 Market Information: Real-time crypto market data and price tracking
+- 💰 Token Management: Create and manage your own tokens
+- 👤 Account Management: Full account control and management
+- 🎨 NFT Creation: Create and manage your NFTs
+- 📰 News Updates: Stay updated with latest blockchain news
+- 🔍 Web Search: Real-time information search capabilities
 
 ## Available Tools
 
