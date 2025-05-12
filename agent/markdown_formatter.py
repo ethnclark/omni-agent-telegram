@@ -56,8 +56,9 @@ class MarkdownFormatter:
             # First escape HTML special characters to prevent injection
             text = html.escape(text)
             
-            # Headers (## Header -> <b>Header</b>)
-            text = re.sub(r'^##\s+(.*?)$', r'<b>\1</b>', text, flags=re.MULTILINE)
+            # Headers (### Header -> <b>Header</b>)
+            text = re.sub(r'^###\s+(.*?)$', r'<b>\1</b>', text, flags=re.MULTILINE)
+            text = re.sub(r'^##\s+(.*?)$', r'<b><u>\1</u></b>', text, flags=re.MULTILINE)
             text = re.sub(r'^#\s+(.*?)$', r'<b><u>\1</u></b>', text, flags=re.MULTILINE)
             
             # Bold formatting
@@ -74,11 +75,14 @@ class MarkdownFormatter:
             # Links
             text = re.sub(r'\[(.*?)\]\((.*?)\)', r'<a href="\2">\1</a>', text)
             
-            # Bullet points
-            text = re.sub(r'^-\s+(.*?)$', r'• \1', text, flags=re.MULTILINE)
+            # Token price information formatting
+            text = re.sub(r'^\s*-\s*(.*?):\s*(.*?)$', r'• <b>\1:</b> \2', text, flags=re.MULTILINE)
             
-            # Numbered lists (preserve numbers)
-            text = re.sub(r'^(\d+)\.\s+(.*?)$', r'\1. \2', text, flags=re.MULTILINE)
+            # Add line breaks between sections
+            text = re.sub(r'(</b>)\n', r'\1\n\n', text)
+            
+            # Add line breaks after bullet points
+            text = re.sub(r'(•.*?)\n', r'\1\n', text)
             
             return text, True
         except Exception as e:
