@@ -6,14 +6,29 @@ A Telegram bot that provides information and assistance related to blockchain te
 
 - Responds to user messages with AI-powered responses
 - Specialized in blockchain technology and cryptocurrency
-- Uses OpenAI's gpt-4o-mini model
-- Provides information on:
+- Uses OpenAI's GPT-4 model
+- Provides information and tools for:
   - Blockchain fundamentals and technologies
   - Cryptocurrencies and tokens
   - DeFi (Decentralized Finance)
   - NFTs and Web3
   - Crypto markets and trends
   - Latest blockchain news and developments
+
+## Available Tools
+
+The bot comes equipped with the following tools:
+
+- **Web Search**: Search the web for real-time information
+- **Token Price**: Get current prices of cryptocurrencies
+- **Token Management**: Create and manage tokens
+- **Account Management**:
+  - Create new accounts
+  - Get account information
+  - Get detailed account data
+  - Switch between accounts
+- **NFT Creation**: Create and manage NFTs
+- **News Updates**: Get the latest blockchain and crypto news
 
 ## Setup
 
@@ -62,10 +77,13 @@ This will:
 - `main.py` - Entry point for the application
 - `bot/` - Contains the Telegram bot implementation
 - `agent/` - Contains the OpenAI agent implementation
+- `tools/` - Contains various tools for blockchain and crypto operations
 
 ## Requirements
 
 - Python 3.8+
 - python-telegram-bot
 - python-dotenv
-- openai 
+- openai
+- langchain
+- langchain-openai 
